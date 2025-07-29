@@ -8,11 +8,6 @@ export default function Quizer() {
   const question = questions[step];
   const [corrected, setCorrected] = useState(0);
 
-  const tryAgain = () => {
-    setStep(0);
-    setCorrected(0);
-  };
-
   return (
     <div>
       {step < questions.length ? (
@@ -23,8 +18,12 @@ export default function Quizer() {
         />
       ) : (
         <div>
-          <Results corrected={corrected} questions={questions} />
-          <button onClick={tryAgain}>Try again</button>
+          <Results
+            setCorrected={setCorrected}
+            corrected={corrected}
+            questions={questions}
+            setStep={setStep}
+          />
         </div>
       )}
     </div>

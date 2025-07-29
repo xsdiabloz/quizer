@@ -1,0 +1,32 @@
+.game {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #f9f9f9;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    li {
+        padding: 12px 20px;
+        margin-bottom: 10px;
+        background-color: #e6e6ff;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    li:hover {
+        background-color: #ccccff;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+}
