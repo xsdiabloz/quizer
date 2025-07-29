@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../Game/game.css";
+import "./game.css";
 
 export const Game = ({ question, setCorrected, setStep }) => {
   function nextStep(index) {
