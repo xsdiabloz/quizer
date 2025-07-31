@@ -1,10 +1,11 @@
 import "./App.css";
-import Quizer from "./components/Quizer";
+import Quizer from "./quizer/Quizer";
+import Task from "./todoList/Task";
 
 function App() {
   return (
     <>
-      <Quizer />
+      <Task />
     </>
   );
 }
