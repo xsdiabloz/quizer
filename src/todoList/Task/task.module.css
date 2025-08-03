@@ -26,6 +26,9 @@
         width: 100%;
         text-align: center;
 
+        .task-info_title-input {
+            margin-bottom: 15px;
+        }
 
         .task-info_title {
             margin: 0;
