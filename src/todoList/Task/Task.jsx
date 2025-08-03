@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "../Task/task.module.css";
 import Checkbox from "@mui/material/Checkbox";
 
-export default function Task({ task }) {
+export default function Task({ task, onEditTask }) {
+  const [isEdit, setIsEdit] = useState(false);
+  const [isDone, setIsDone] = useState(task.done);
+  const [taskTitle, setTaskTitle] = useState(task.title ?? "");
+  const [taskDesc, setTaskDesc] = useState(task.desc ?? "");
+  const [isShowDialog, setIsShowDialog] = useState(false);
+
   return (
     <div className={classes.task}>
       <div className={classes["task-check"]}></div>

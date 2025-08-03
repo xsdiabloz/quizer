@@ -18,11 +18,17 @@ function App() {
     ]);
   };
 
+  const onEditTask = (id, data) => {
+    return [...tasks].map((val) =>
+      val.id === id ? { ...tasks, ...data } : tasks
+    );
+  };
+
   return (
     <>
       <div className="main-wrapper">
-        <TaskList tasks={tasks} title="Active" />
-        <TaskList tasks={tasks} title="Completed" />
+        <TaskList onEditTask={onEditTask} tasks={tasks} title="Active" />
+        <TaskList onEditTask={onEditTask} tasks={tasks} title="Completed" />
       </div>
       <AddBtn>
         {(closeModal) => {
