@@ -3,7 +3,7 @@ import classes from "../Addform/addForm.module.css";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 
-export default function AddForm({ addNewTask }) {
+export default function AddForm({ addNewTask, closeModal }) {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [isTitleValid, setIsTitleValid] = useState(title && title.trim());
@@ -23,6 +23,7 @@ export default function AddForm({ addNewTask }) {
       title,
       desc,
     });
+    closeModal();
     setTitle("");
     setDesc("");
   };

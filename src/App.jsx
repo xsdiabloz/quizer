@@ -3,6 +3,7 @@ import "./App.css";
 import TaskList from "./todoList/TaskList/TaskList";
 import { taskObject } from "./todoList/taskObject/taskObject";
 import AddBtn from "./todoList/Addbtn/AddBtn";
+import AddForm from "./todoList/Addform/AddForm";
 
 function App() {
   const [tasks, setTasks] = useState(taskObject);
@@ -23,7 +24,11 @@ function App() {
         <TaskList tasks={tasks} title="Active" />
         <TaskList tasks={tasks} title="Completed" />
       </div>
-      <AddBtn addNewTask={addNewTask} />
+      <AddBtn>
+        {(closeModal) => {
+          return <AddForm closeModal={closeModal} addNewTask={addNewTask} />;
+        }}
+      </AddBtn>
     </>
   );
 }
