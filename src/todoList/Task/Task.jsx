@@ -8,7 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 
-export default function Task({ task, onEditTask }) {
+export default function Task({ task, onEditTask, deleteTask }) {
   const [isEdit, setIsEdit] = useState(false);
   const [isDone, setIsDone] = useState(task.completed);
   const [taskTitle, setTaskTitle] = useState(task.title ?? "");
@@ -31,6 +31,12 @@ export default function Task({ task, onEditTask }) {
         desc: taskDesc,
       });
     }
+    setIsEdit(false);
+  };
+
+  const declineChanges = () => {
+    setTaskTitle(taskTitle);
+    setTaskDesc(taskDesc);
     setIsEdit(false);
   };
 
@@ -75,14 +81,14 @@ export default function Task({ task, onEditTask }) {
       <div className={classes["task-action"]}>
         {isEdit ? (
           <>
-            <IconButton onClick={() => acceptChanges()}>
+            <IconButton onClick={acceptChanges}>
               <CheckIcon
                 sx={{
                   color: isDone ? "#D8D8D8" : "#539CFD",
                 }}
               />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={declineChanges}>
               <CloseIcon
                 sx={{
                   color: isDone ? "#D8D8D8" : "#539CFD",
@@ -98,7 +104,7 @@ export default function Task({ task, onEditTask }) {
           </IconButton>
         )}
 
-        <IconButton>
+        <IconButton onClick={() => deleteTask(task.id)}>
           <DeleteIcon
             sx={{
               color: isDone ? "#D8D8D8" : "#539CFD",

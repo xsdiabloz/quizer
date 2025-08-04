@@ -2,7 +2,7 @@ import React from "react";
 import classes from "../TaskList/taskList.module.css";
 import Task from "../Task/Task";
 
-export default function TaskList({ tasks, title, onEditTask }) {
+export default function TaskList({ tasks, title, onEditTask, deleteTask }) {
   return (
     <>
       <div className={classes.wrapper}>
@@ -10,7 +10,12 @@ export default function TaskList({ tasks, title, onEditTask }) {
         <div className={classes["task-list"]}>
           {tasks.length > 0
             ? tasks.map((task) => (
-                <Task onEditTask={onEditTask} task={task} key={task.id} />
+                <Task
+                  deleteTask={deleteTask}
+                  onEditTask={onEditTask}
+                  task={task}
+                  key={task.id}
+                />
               ))
             : "No tasks"}
         </div>

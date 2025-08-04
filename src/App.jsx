@@ -19,17 +19,31 @@ function App() {
   };
 
   const onEditTask = (id, data) => {
-    const updatedTasks = tasks.map((val) =>
+    const newTask = [...tasks].map((val) =>
       val.id === id ? { ...val, ...data } : val
     );
-    setTasks(updatedTasks);
+    setTasks(newTask);
+  };
+
+  const deleteTask = (id) => {
+    setTasks([...tasks].filter((val) => val.id !== id));
   };
 
   return (
     <>
       <div className="main-wrapper">
-        <TaskList onEditTask={onEditTask} tasks={tasks} title="Active" />
-        <TaskList onEditTask={onEditTask} tasks={tasks} title="Completed" />
+        <TaskList
+          deleteTask={deleteTask}
+          onEditTask={onEditTask}
+          tasks={tasks}
+          title="Active"
+        />
+        <TaskList
+          deleteTask={deleteTask}
+          onEditTask={onEditTask}
+          tasks={tasks}
+          title="Completed"
+        />
       </div>
       <AddBtn>
         {(closeModal) => {
