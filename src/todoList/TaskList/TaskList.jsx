@@ -1,20 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classes from "../TaskList/taskList.module.css";
 import Task from "../Task/Task";
 
-export default function TaskList({ tasks, title, onEditTask, deleteTask }) {
+export default function TaskList({
+  tasks,
+  title,
+  onEditTask,
+  deleteTask,
+  sortBy,
+}) {
+  const [sortTasks, setSortTasks] = useState([]);
+
+  useEffect(() => {
+    setSortTasks(
+      [...tasks].filter((val) => (sortBy ? val[sortBy] : !val.completed))
+    );
+  }, [tasks, sortBy]);
+
   return (
     <>
       <div className={classes.wrapper}>
         <h2 className={classes["list-title"]}>{title}</h2>
         <div className={classes["task-list"]}>
-          {tasks.length > 0
-            ? tasks.map((task) => (
+          {sortTasks.length > 0
+            ? sortTasks.map((task) => (
                 <Task
                   deleteTask={deleteTask}
                   onEditTask={onEditTask}
                   task={task}
-                  key={task.id}
+                  key={`${task.title}-${task.completed}-${task.id}`}
                 />
               ))
             : "No tasks"}

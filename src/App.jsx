@@ -13,16 +13,17 @@ function App() {
       ...tasks,
       {
         id: tasks.at(-1)?.id + 1 || 1,
+
         ...data,
       },
     ]);
   };
 
   const onEditTask = (id, data) => {
-    const newTask = [...tasks].map((val) =>
+    const updatedTasks = tasks.map((val) =>
       val.id === id ? { ...val, ...data } : val
     );
-    setTasks(newTask);
+    setTasks(updatedTasks);
   };
 
   const deleteTask = (id) => {
@@ -37,8 +38,10 @@ function App() {
           onEditTask={onEditTask}
           tasks={tasks}
           title="Active"
+          sortBy={null}
         />
         <TaskList
+          sortBy="completed"
           deleteTask={deleteTask}
           onEditTask={onEditTask}
           tasks={tasks}

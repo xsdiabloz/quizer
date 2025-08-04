@@ -37,6 +37,19 @@
         .task-info_desc {
             margin: 0;
         }
+
+        .icon-isNotDone {
+            color: #539CFD;
+        }
+
+
+    }
+
+    .is-done, .task-info .is-done,
+    .task-info .is-done .task-info_title,
+    .task-info .is-done .task-info_desc,
+    .icon-isDone {
+        color: #D8D8D8;
     }
 
     .task-actions {
