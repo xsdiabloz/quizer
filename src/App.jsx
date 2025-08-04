@@ -19,9 +19,10 @@ function App() {
   };
 
   const onEditTask = (id, data) => {
-    return [...tasks].map((val) =>
-      val.id === id ? { ...tasks, ...data } : tasks
+    const updatedTasks = tasks.map((val) =>
+      val.id === id ? { ...val, ...data } : val
     );
+    setTasks(updatedTasks);
   };
 
   return (

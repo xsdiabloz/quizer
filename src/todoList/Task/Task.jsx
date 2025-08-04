@@ -6,6 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 export default function Task({ task, onEditTask }) {
   const [isEdit, setIsEdit] = useState(false);
@@ -18,10 +19,20 @@ export default function Task({ task, onEditTask }) {
     setIsDone(!isDone);
     setTimeout(() => {
       onEditTask(task.id, {
-        done: !isDone,
+        completed: !isDone,
       });
     }, 50);
   }
+
+  const acceptChanges = () => {
+    if (taskTitle !== task.title || taskDesc !== task.desc) {
+      onEditTask(task.id, {
+        title: taskTitle,
+        desc: taskDesc,
+      });
+    }
+    setIsEdit(false);
+  };
 
   return (
     <div className={classes.task}>
@@ -37,19 +48,19 @@ export default function Task({ task, onEditTask }) {
         onChange={() => onChangeDoneStatus()}
       />
       <div className={classes["task-info"]}>
-        {isDone ? (
+        {isEdit ? (
           <>
             <div className={classes["task-info_title-input"]}>
               <TextField
                 label="Title"
-                defaultValue={taskTitle}
+                value={taskTitle}
                 onChange={(e) => setTaskTitle(e.target.value)}
               />
             </div>
             <div className={classes["task-info_desc-input"]}>
               <TextField
                 label="Desc"
-                defaultValue={taskDesc}
+                value={taskDesc}
                 onChange={(e) => setTaskDesc(e.target.value)}
               />
             </div>
@@ -64,18 +75,36 @@ export default function Task({ task, onEditTask }) {
       <div className={classes["task-action"]}>
         {isEdit ? (
           <>
-            <IconButton>
-              <CheckIcon />
+            <IconButton onClick={() => acceptChanges()}>
+              <CheckIcon
+                sx={{
+                  color: isDone ? "#D8D8D8" : "#539CFD",
+                }}
+              />
             </IconButton>
             <IconButton>
-              <CloseIcon />
+              <CloseIcon
+                sx={{
+                  color: isDone ? "#D8D8D8" : "#539CFD",
+                }}
+              />
             </IconButton>
           </>
         ) : (
-          <IconButton>
-            <DeleteIcon />
+          <IconButton onClick={() => setIsEdit(true)}>
+            <EditIcon
+              className={classes[isDone ? "icon-isDone" : "icon-notDone"]}
+            />
           </IconButton>
         )}
+
+        <IconButton>
+          <DeleteIcon
+            sx={{
+              color: isDone ? "#D8D8D8" : "#539CFD",
+            }}
+          />
+        </IconButton>
       </div>
     </div>
   );
