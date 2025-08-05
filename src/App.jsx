@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, createContext } from "react";
 import "./App.css";
 import TaskList from "./todoList/components/TaskList/TaskList";
 import { taskObject } from "./todoList/components/taskObject/taskObject";
@@ -6,41 +6,32 @@ import AddBtn from "./todoList/components/Addbtn/AddBtn";
 import AddForm from "./todoList/components/Addform/AddForm";
 import Search from "./todoList/components/Search/Search";
 import useSearchtasks from "./todoList/Hooks/useSearchTasks";
+import deleteTask from "./todoList/helpers/deleteTasks/deleteTasks";
+import addTasks from "./todoList/helpers/addTask/addTasks";
+import editTasks from "./todoList/helpers/editTasks/editTasks";
+import Notifications from "./todoList/components/Notifications/Notifications";
+import useNoti from "./todoList/Hooks/useNoti";
+
+export const NotifyContext = createContext(null);
 
 function App() {
   const [tasks, setTasks] = useState(taskObject);
   const [searchGlobal, setSearchGlobal] = useState("");
 
-  const addNewTask = (data) => {
-    setTasks([
-      ...tasks,
-      {
-        id: tasks.at(-1)?.id + 1 || 1,
+  const { notifications, showNoti, removeNotiById } = useNoti();
 
-        ...data,
-      },
-    ]);
-  };
-
-  const onEditTask = (id, data) => {
-    const updatedTasks = tasks.map((val) =>
-      val.id === id ? { ...val, ...data } : val
-    );
-    setTasks(updatedTasks);
-  };
-
-  const deleteTask = (id) => {
-    setTasks([...tasks].filter((val) => val.id !== id));
-  };
-
+  const addNewTask = addTasks(tasks, setTasks);
+  const onEditTask = editTasks(tasks, setTasks);
+  const onDeleteTask = deleteTask(tasks, setTasks);
   const searchTasks = useSearchtasks(tasks, searchGlobal);
 
   return (
-    <>
+    <NotifyContext.Provider value={{ notifications, showNoti, removeNotiById }}>
+      <Notifications notifications={notifications} />
       <Search setSearchGlobal={setSearchGlobal} searchTasks={searchTasks} />
       <div className="main-wrapper">
         <TaskList
-          deleteTask={deleteTask}
+          deleteTask={onDeleteTask}
           onEditTask={onEditTask}
           tasks={searchTasks}
           title="Active"
@@ -48,7 +39,7 @@ function App() {
         />
         <TaskList
           sortBy="completed"
-          deleteTask={deleteTask}
+          deleteTask={onDeleteTask}
           onEditTask={onEditTask}
           tasks={searchTasks}
           title="Completed"
@@ -59,7 +50,7 @@ function App() {
           return <AddForm closeModal={closeModal} addNewTask={addNewTask} />;
         }}
       </AddBtn>
-    </>
+    </NotifyContext.Provider>
   );
 }
 

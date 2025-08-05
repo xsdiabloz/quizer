@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import classes from "./addForm.module.css";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import { NotifyContext } from "../../../App";
 
 export default function AddForm({ addNewTask, closeModal }) {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [isTitleValid, setIsTitleValid] = useState(title && title.trim());
   const [isDescValid, setIsDescValid] = useState(desc && desc.trim());
+
+  const notifyContext = useContext(NotifyContext);
 
   useEffect(() => {
     setIsTitleValid(title && title.trim());
@@ -26,6 +29,11 @@ export default function AddForm({ addNewTask, closeModal }) {
     closeModal();
     setTitle("");
     setDesc("");
+    notifyContext.showNoti({
+      text: "Task was been added!",
+      time: 2000,
+      type: "success",
+    });
   };
 
   return (

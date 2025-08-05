@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
+import { NotifyContext } from "../../../App";
 import classes from "./task.module.css";
 import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
@@ -22,6 +23,8 @@ export default function Task({ task, onEditTask, deleteTask }) {
 
   const inputTitleRef = useRef(null);
 
+  const notifyContext = useContext(NotifyContext);
+
   useEffect(() => {
     if (isEdit) inputTitleRef?.current?.focus();
   }, [isEdit]);
@@ -33,6 +36,13 @@ export default function Task({ task, onEditTask, deleteTask }) {
         completed: !isDone,
       });
     }, 50);
+    notifyContext.showNoti({
+      text: !isDone
+        ? `Task ${task.title} was been completed!`
+        : `Task ${task.title} is active!`,
+      type: "info",
+      time: 1500,
+    });
   }
 
   const acceptChanges = () => {
@@ -41,7 +51,13 @@ export default function Task({ task, onEditTask, deleteTask }) {
         title: taskTitle,
         desc: taskDesc,
       });
+      notifyContext.showNoti({
+        text: `Task ${task.title} was been edited!`,
+        type: "success",
+        time: 1500,
+      });
     }
+
     setIsEdit(false);
   };
 
@@ -53,6 +69,11 @@ export default function Task({ task, onEditTask, deleteTask }) {
 
   const modalAccept = () => {
     deleteTask(task.id);
+    notifyContext.showNoti({
+      text: `Task ${task.title} was been deleted!`,
+      type: "warning",
+      time: 3000,
+    });
     setIsShowDialog(false);
   };
 
