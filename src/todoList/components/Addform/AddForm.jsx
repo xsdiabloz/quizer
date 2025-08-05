@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import classes from "../Addform/addForm.module.css";
+import classes from "./addForm.module.css";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 

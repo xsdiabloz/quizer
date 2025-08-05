@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import classes from "../Task/task.module.css";
+import classes from "./task.module.css";
 import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
